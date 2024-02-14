@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './redux/store/index';
+import Footer from './components/footer';
+import Header from './components/header';
+import Home from './pages/Home';
+import Peliculas from './pages/Peliculas';
+import Series from './pages/Series';
+import Error from './pages/Error';
+import Loading from './pages/Loading';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Header />
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} /> 
+            <Route path="/peliculas" element={<Peliculas />} />
+            <Route path="/series" element={<Series />} />
+            <Route path="/error" element={<Error />} />
+            <Route path="/loading" element={<Loading />} />
+          </Routes>
+        </Router>
+        <Footer />
+      </div>
+    </Provider>
   );
 }
 
