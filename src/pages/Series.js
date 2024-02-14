@@ -3,6 +3,8 @@ import data from "../data/sample.json"
 import "../styles/containerHome.css";
 import "../styles/header.css";
 import "../styles/Movies.css";
+import Loading from "./Loading";
+import Error from "./Error";
 import {useDispatch, useSelector} from 'react-redux';
 import { setSeries, setPopupData } from "../redux/reducers/series";
 
@@ -11,6 +13,8 @@ const Series = () => {
     
     const dispatch = useDispatch();
     const series = useSelector(state => state.series.series);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const filterSeries = data.entries
@@ -20,6 +24,26 @@ const Series = () => {
 
         dispatch(setSeries(filterSeries));
     }, [dispatch]); 
+
+    useEffect(() => {
+        setLoading(true);
+        try {
+            setTimeout(() => {
+                setLoading(false);
+            }, 500);
+        } catch (error) {
+            setLoading(false);
+            setError(true);
+        }
+    }, []);
+
+    if (loading) {
+        return <Loading/>;
+    }
+
+    if (error) {
+        return <Error/>;
+    }
 
     return (
         <div>

@@ -10,7 +10,7 @@ function Error() {
                 <a className="title2">Popular Titles</a>
             </nav>
             <div className="contenedor">
-                Error
+                Oops, something went wrong!
             </div>
             
         </div>

@@ -10,7 +10,7 @@ function Loading() {
                 <a className="title2">Popular Titles</a>
             </nav>
             <div className="contenedor">
-                Loading
+                Loading...
             </div>
         </div>
     );

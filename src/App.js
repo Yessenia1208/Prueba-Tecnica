@@ -21,7 +21,6 @@ function App() {
             <Route path="/peliculas" element={<Peliculas />} />
             <Route path="/series" element={<Series />} />
             <Route path="/error" element={<Error />} />
-            <Route path="/loading" element={<Loading />} />
           </Routes>
         </Router>
         <Footer />

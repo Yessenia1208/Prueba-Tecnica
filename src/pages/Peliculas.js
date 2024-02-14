@@ -3,13 +3,17 @@ import data from "../data/sample.json";
 import "../styles/containerHome.css";
 import "../styles/header.css";
 import "../styles/Movies.css";
-import {useDispatch, useSelector} from 'react-redux';
+import Loading from "./Loading";
+import Error from "./Error";
+import { useDispatch, useSelector } from 'react-redux';
 import { setMovies, setPopupData } from "../redux/reducers/peliculas";
 
 const Peliculas = () => {
-    
     const dispatch = useDispatch();
-    const movies = useSelector(state => state.movies.movies); 
+    const movies = useSelector(state => state.movies.movies);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
 
     useEffect(() => {
         const filterMovies = data.entries
@@ -18,7 +22,27 @@ const Peliculas = () => {
             .slice(0, 20);
 
         dispatch(setMovies(filterMovies));
-    }, [dispatch]); 
+    }, [dispatch]);
+
+    useEffect(() => {
+        setLoading(true);
+        try {
+            setTimeout(() => {
+                setLoading(false);
+            }, 500);
+        } catch (error) {
+            setLoading(false);
+            setError(true);
+        }
+    }, []);
+
+    if (loading) {
+        return <Loading/>;
+    }
+
+    if (error) {
+        return <Error/>;
+    }
 
     return (
         <div>
@@ -29,7 +53,7 @@ const Peliculas = () => {
                 <div className="movies-container">
                     {movies.map(movie => (
                         <div key={movie.title} className="movie-container" onClick={() => dispatch(setPopupData(movie))}>
-                            <img src={movie.images["Poster Art"].url} alt={movie.title} className="movie-image"/>
+                            <img src={movie.images["Poster Art"].url} alt={movie.title} className="movie-image" />
                             <div className="mouse-positon">
                                 <h2>{movie.title}</h2>
                                 <p>{movie.description}</p>
